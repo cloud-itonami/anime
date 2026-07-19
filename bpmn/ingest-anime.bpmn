@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="anime-ingest"
+                  targetNamespace="https://etzhayyim.com/bpmn/anime">
+
+  <!-- Title registration + season scaffold -->
+  <bpmn:process id="createTitle" name="Create Anime Title" isExecutable="true">
+    <bpmn:startEvent id="Start_Title" name="Title create requested"/>
+    <bpmn:sequenceFlow id="t1" sourceRef="Start_Title" targetRef="Task_CreateTitle"/>
+    <bpmn:serviceTask id="Task_CreateTitle" name="Persist title"
+                      camunda:topic="com.etzhayyim.apps.anime.createTitle"/>
+    <bpmn:sequenceFlow id="t2" sourceRef="Task_CreateTitle" targetRef="End_Title"/>
+    <bpmn:endEvent id="End_Title" name="Title created"/>
+  </bpmn:process>
+
+  <!-- Season ingest -->
+  <bpmn:process id="createSeason" name="Create Anime Season" isExecutable="true">
+    <bpmn:startEvent id="Start_Season" name="Season create requested"/>
+    <bpmn:sequenceFlow id="s1" sourceRef="Start_Season" targetRef="Task_CreateSeason"/>
+    <bpmn:serviceTask id="Task_CreateSeason" name="Persist season"
+                      camunda:topic="com.etzhayyim.apps.anime.createSeason"/>
+    <bpmn:sequenceFlow id="s2" sourceRef="Task_CreateSeason" targetRef="End_Season"/>
+    <bpmn:endEvent id="End_Season" name="Season created"/>
+  </bpmn:process>
+
+  <!-- Episode ingest -->
+  <bpmn:process id="createEpisode" name="Create Episode" isExecutable="true">
+    <bpmn:startEvent id="Start_Episode" name="Episode create requested"/>
+    <bpmn:sequenceFlow id="e1" sourceRef="Start_Episode" targetRef="Task_CreateEpisode"/>
+    <bpmn:serviceTask id="Task_CreateEpisode" name="Persist episode"
+                      camunda:topic="com.etzhayyim.apps.anime.createEpisode"/>
+    <bpmn:sequenceFlow id="e2" sourceRef="Task_CreateEpisode" targetRef="End_Episode"/>
+    <bpmn:endEvent id="End_Episode" name="Episode created"/>
+  </bpmn:process>
+
+  <!-- Schedule ingest (broadcast slot) -->
+  <bpmn:process id="createSchedule" name="Create Broadcast Schedule" isExecutable="true">
+    <bpmn:startEvent id="Start_Schedule" name="Schedule create requested"/>
+    <bpmn:sequenceFlow id="sc1" sourceRef="Start_Schedule" targetRef="Task_CreateSchedule"/>
+    <bpmn:serviceTask id="Task_CreateSchedule" name="Persist schedule"
+                      camunda:topic="com.etzhayyim.apps.anime.createSchedule"/>
+    <bpmn:sequenceFlow id="sc2" sourceRef="Task_CreateSchedule" targetRef="End_Schedule"/>
+    <bpmn:endEvent id="End_Schedule" name="Schedule created"/>
+  </bpmn:process>
+
+  <!-- Review submission -->
+  <bpmn:process id="submitReview" name="Submit Review" isExecutable="true">
+    <bpmn:startEvent id="Start_Review" name="Review submitted"/>
+    <bpmn:sequenceFlow id="rv1" sourceRef="Start_Review" targetRef="Task_SubmitReview"/>
+    <bpmn:serviceTask id="Task_SubmitReview" name="Persist review"
+                      camunda:topic="com.etzhayyim.apps.anime.submitReview"/>
+    <bpmn:sequenceFlow id="rv2" sourceRef="Task_SubmitReview" targetRef="End_Review"/>
+    <bpmn:endEvent id="End_Review" name="Review persisted"/>
+  </bpmn:process>
+
+</bpmn:definitions>
