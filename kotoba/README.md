@@ -2,7 +2,12 @@
 
 Phase E Option B reference implementation of anime (anime title + season + episode + schedule + review registry) on the etzhayyim substrate.
 
-Per [ADR-2605203000](../../../90-docs/adr/2605203000-kotoba-write-target-options.md), anime migrates from vendor's `createKyselyDb` pattern (RW direct write) to **Option B** — PDS XRPC writes via `@etzhayyim/sdk e.write()`.
+Per **ADR-2605203000** (upstream design ADR — the extraction did not carry ADR bodies
+into this repository; only the number is cited here), anime migrates from vendor's
+`createKyselyDb` pattern (RW direct write) to **Option B** — PDS XRPC writes via
+`@etzhayyim/sdk e.write()`.
+
+> Operator instructions live in [`../docs/operator-quickstart.md`](../docs/operator-quickstart.md).
 
 Coverage: **10 of 10 (100%)** anime canonical XRPC commands ported.
 
@@ -99,7 +104,14 @@ Option C (IPFS-only) N/A — no blob storage needed for metadata.
 
 ## Related
 
-- [ADR-2605203000](../../../90-docs/adr/2605203000-kotoba-write-target-options.md) — Phase E write-target options
-- [kiyo kotoba](../../etzhayyim-project-kiyo/kotoba/) — sibling Option B reference (12/12 ✓)
-- [sbom kotoba](../../etzhayyim-project-sbom/kotoba/) — Option B reference (17/N)
-- [hanrei kotoba](../../etzhayyim-project-hanrei/kotoba/) — Option B reference (31/31 ✓)
+The links below pointed into the `etzhayyim/root` monorepo and **broke when this
+project was extracted into a standalone repository**. They are kept as names, not
+links, because the targets are no longer reachable from here:
+
+- **ADR-2605203000** — Phase E write-target options
+- **kiyo kotoba** — sibling Option B reference (12/12 ✓)
+- **sbom kotoba** — Option B reference (17/N)
+- **hanrei kotoba** — Option B reference (31/31 ✓)
+
+Sibling projects were each extracted into their own repositories; look them up by
+name rather than by path.
